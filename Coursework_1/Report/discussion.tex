@@ -1,0 +1,40 @@
+\part{IPv6, Ping \& Traceroute}
+\section{Ping testing}
+\begin{normalsize}
+In this section we investigate the use of IPv6 on the internet using ping and traceroute utilities.  Below are the listed hosts, including resolved IPv4 and IPv6 addresses, as well as average, minimum and maximum round trip times. A complete set of results for this can be found at the end of this document. 
+\end{normalsize}
+\section{What conclusions can be drawn about the adoption of IPv6 on the internet?}
+\begin{normalsize}
+Clearly IPv6 adoption is increasing, with almost all mainstream sites adopting the standard. That said, from the selection below there are some notable exceptions, including major search provider Yahoo, and more surprisingly notable sites relating directly to Computer Science, Programming and technology, with Github and Stackoverflow still offering no IPv6 support. Most surprisingly is Reddit, with 'the frontpage of the internet' still having no IPv6 support. So while IPv6 support is certainly on it's way, the lack of IPv6 support from several mainstream sites may prove to be a stumbling block, especially when trying to persuade more ISP's to support IPv6.
+\end{normalsize}
+\section{What conclusions can you draw from the data you have gathered about the relative performance of IPv4 and IPv6?}
+\begin{normalsize}
+The relative performance of IPv4 and IPv6 seems almost identical, with IPv6 certainly faring no worse in terms of round trip times. In almost all attempted sites, IPv6 is either identical or faster than it's IPv4 alternative, with one or two exceptions where IPv6 is slower , albeit within a margin of error of two to three ms. In some cases, IPv6 is notable faster, for example when pinging Yahoo, almost 20 ms is saved. However, with the high rrt times of the IPv4 pings, this may also be within a margin of error. 
+\end{normalsize}
+\section{How confident are you in these conclusions? What factors does your data gathering not take into account and how could the testing be improved?}
+\begin{normalsize}
+I am confident in the conclusions drawn from this data, largely concluding that IPv6 is practically equivalent in performance to IPv4. Our testing methodology however does not take into account larger packet sizes, with the windows and $ping \enspace [host] $ and $ping -6 \enspace [host]$ commands used in the testing only sending 32 bytes of data, far from the maximum payload size of IPv6 (64 kilobytes). Further to this, no experimentation is made with varying IPv4 header sizes when compared to the fixed 40 byte header of IPv6, implemented in an attempt to facilitate efficient parsing of the packet header. This could potentially affect routing speeds, decreasing packet round trip times. We also make no acknowledgement of fragmented and extension packets, with extension packets replacing the options section of the traditional IPv4 header, and larger fragmented packets being essential in many of the common tasks we perform daily online. 
+\end{normalsize}
+\section{What do you notice about the RTT of Google-controlled services? Why do you think this is and can you confirm your theory with traceroute and traceroute6?}
+\begin{normalsize}
+Google's services all return the same round trip time, in this case 4ms. This is clearly impossible for a server hosted in Australia (in the case of google.com.au). It is likely that google is using some form of global Anycast network, routing client traffic to a node on the basis of geographical distance, congestion and other measures. In this instance, traffic targeted at any of Google's services, whether Google.com.au, or Youtube.com, is being directed at a single block of IP addresses, likely a datacentre in Western Europe, if not England. This is shown in the traceroute results below, showing the final hop for several google services landing within a small IP range. In the case of Google.com.au, a connection to an Australian Server is made (demonstrated by the far higher RRT, at almost 150ms), before Anycast routes the traffic back towards servers hosted in Western Europe; just as if we had connected to Google.co.uk. In fact, the final directed hop on both Google.co.uk and Google.com.au are handled by the same node (216.58.212.99). 
+\end{normalsize}
+\input{traceroutes}
+\begin{normalsize}
+As shown above, the final hop for each of these services lands in the same IP range, albeit with some detours along the way. This is most easily demonstrated with IPv4 (due to the more page-friendly address range), but functions just the same on IPv6; directing users' traffic to an optimal server based on their distance, both from a geographical and topological perspective, but also considering congestion, and likely a wide range of other factors. This type of distributed system allows google to operate a large CDN, serving content from datacentres as close to the end user as possible, keeping latency and transfer times down.\\
+
+\end{normalsize}
+\newpage
+\section{What do you notice about IPv4 results for Netflix and ebay? Why do you think this happens?}
+\begin{normalsize}
+When setting up DNS records for a website, it is common for companies to setup multiple records directing to the same servers, however this causes problems in itself, such as being penalised by search engines for duplicate content. Hence, when setting up A-records (and AAAA records for IPv6), it is common for companies to chose between either yoursite.com or www.yoursite.com. In the case of Ebay, the later is chosen. As shown below, when pinging www.ebay.co.uk with both IPv4 and IPv6, the site responds as normal. 
+\end{normalsize}
+\input{ebaypings}
+\begin{normalsize}
+As is clear, www.ebay.co.uk resolves to the consumer facing website. ebay.co.uk however, while resolving to an IP address does not return pings, either refusing connections on port 80/443 or because the server is not reachable.
+\end{normalsize}
+\newpage
+\section{Why is there such a large variance in RTT between google.co.uk, github.com and iinet.net.au?}
+\begin{normalsize}
+The variance in the Round trip times for each of these three sites is caused by their massive variance in geolocation. We can show this by running a traceroute, then running an online Geolocation tool on the IP of the ﬁnal hop. In the case of Github (192.30.253.113), the ﬁnal hop is located in San Francisco. The same stands true for iinet.net.au, which is clearly located in Australia. When pinging google services, we’re redirected by the aforementioned Anycast network, so while the pingable IP of google.co.uk resolves to California, we’re more likely being served by a server in western Europe, if not the UK itself. This massive geographical diﬀerence between the three servers, with one in Australia (or south east Asia), one in Europe and one on the East coast of the United States, is likely the cause of the diﬀerence in round trip times.
+\end{normalsize}

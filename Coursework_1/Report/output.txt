@@ -1,0 +1,88 @@
+No.     Time           Source                Destination           Protocol Length Info
+      1 0.000000       10.9.168.179          wsn.ecs.soton.ac.uk   TCP      54     30409 → rfe(5002) [FIN, ACK] Seq=1 Ack=1 Win=256 Len=0
+
+Frame 1: 54 bytes on wire (432 bits), 54 bytes captured (432 bits) on interface 0
+Ethernet II, Src: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f), Dst: Cisco_9f:f5:1f (00:00:0c:9f:f5:1f)
+Internet Protocol Version 4, Src: 10.9.168.179 (10.9.168.179), Dst: wsn.ecs.soton.ac.uk (152.78.64.186)
+Transmission Control Protocol, Src Port: 30409 (30409), Dst Port: rfe (5002), Seq: 1, Ack: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      2 0.005783       wsn.ecs.soton.ac.uk   10.9.168.179          TCP      54     rfe(5002) → 30409 [RST] Seq=1 Win=0 Len=0
+
+Frame 2: 54 bytes on wire (432 bits), 54 bytes captured (432 bits) on interface 0
+Ethernet II, Src: Cisco_04:03:42 (d8:67:d9:04:03:42), Dst: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f)
+Internet Protocol Version 4, Src: wsn.ecs.soton.ac.uk (152.78.64.186), Dst: 10.9.168.179 (10.9.168.179)
+Transmission Control Protocol, Src Port: rfe (5002), Dst Port: 30409 (30409), Seq: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      3 0.595108       10.9.168.179          wsn.ecs.soton.ac.uk   TCP      66     30418 → rfe(5002) [SYN] Seq=0 Win=8192 Len=0 MSS=1460 WS=256 SACK_PERM=1
+
+Frame 3: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface 0
+Ethernet II, Src: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f), Dst: Cisco_9f:f5:1f (00:00:0c:9f:f5:1f)
+Internet Protocol Version 4, Src: 10.9.168.179 (10.9.168.179), Dst: wsn.ecs.soton.ac.uk (152.78.64.186)
+Transmission Control Protocol, Src Port: 30418 (30418), Dst Port: rfe (5002), Seq: 0, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      4 0.597415       wsn.ecs.soton.ac.uk   10.9.168.179          TCP      66     rfe(5002) → 30418 [SYN, ACK] Seq=0 Ack=1 Win=29200 Len=0 MSS=1460 SACK_PERM=1 WS=128
+
+Frame 4: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface 0
+Ethernet II, Src: Cisco_04:03:42 (d8:67:d9:04:03:42), Dst: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f)
+Internet Protocol Version 4, Src: wsn.ecs.soton.ac.uk (152.78.64.186), Dst: 10.9.168.179 (10.9.168.179)
+Transmission Control Protocol, Src Port: rfe (5002), Dst Port: 30418 (30418), Seq: 0, Ack: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      5 0.597637       10.9.168.179          wsn.ecs.soton.ac.uk   TCP      54     30418 → rfe(5002) [ACK] Seq=1 Ack=1 Win=65536 Len=0
+
+Frame 5: 54 bytes on wire (432 bits), 54 bytes captured (432 bits) on interface 0
+Ethernet II, Src: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f), Dst: Cisco_9f:f5:1f (00:00:0c:9f:f5:1f)
+Internet Protocol Version 4, Src: 10.9.168.179 (10.9.168.179), Dst: wsn.ecs.soton.ac.uk (152.78.64.186)
+Transmission Control Protocol, Src Port: 30418 (30418), Dst Port: rfe (5002), Seq: 1, Ack: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      6 0.597809       10.9.168.179          wsn.ecs.soton.ac.uk   TCP      60     30418 → rfe(5002) [PSH, ACK] Seq=1 Ack=1 Win=65536 Len=6
+
+Frame 6: 60 bytes on wire (480 bits), 60 bytes captured (480 bits) on interface 0
+Ethernet II, Src: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f), Dst: Cisco_9f:f5:1f (00:00:0c:9f:f5:1f)
+Internet Protocol Version 4, Src: 10.9.168.179 (10.9.168.179), Dst: wsn.ecs.soton.ac.uk (152.78.64.186)
+Transmission Control Protocol, Src Port: 30418 (30418), Dst Port: rfe (5002), Seq: 1, Ack: 1, Len: 6
+Data (6 bytes)
+
+0000  65 70 31 65 31 36                                 ep1e16
+
+No.     Time           Source                Destination           Protocol Length Info
+      7 0.599810       wsn.ecs.soton.ac.uk   10.9.168.179          TCP      54     rfe(5002) → 30418 [ACK] Seq=1 Ack=7 Win=29312 Len=0
+
+Frame 7: 54 bytes on wire (432 bits), 54 bytes captured (432 bits) on interface 0
+Ethernet II, Src: Cisco_04:03:42 (d8:67:d9:04:03:42), Dst: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f)
+Internet Protocol Version 4, Src: wsn.ecs.soton.ac.uk (152.78.64.186), Dst: 10.9.168.179 (10.9.168.179)
+Transmission Control Protocol, Src Port: rfe (5002), Dst Port: 30418 (30418), Seq: 1, Ack: 7, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      8 0.599812       wsn.ecs.soton.ac.uk   10.9.168.179          TCP      105    rfe(5002) → 30418 [PSH, ACK] Seq=1 Ack=7 Win=29312 Len=51
+
+Frame 8: 105 bytes on wire (840 bits), 105 bytes captured (840 bits) on interface 0
+Ethernet II, Src: Cisco_04:03:42 (d8:67:d9:04:03:42), Dst: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f)
+Internet Protocol Version 4, Src: wsn.ecs.soton.ac.uk (152.78.64.186), Dst: 10.9.168.179 (10.9.168.179)
+Transmission Control Protocol, Src Port: rfe (5002), Dst Port: 30418 (30418), Seq: 1, Ack: 7, Len: 51
+Data (51 bytes)
+
+0000  48 65 6c 6c 6f 20 65 70 31 65 31 36 2c 20 74 68   Hello ep1e16, th
+0010  65 20 64 61 74 65 20 69 73 20 30 33 2f 31 31 2f   e date is 03/11/
+0020  32 30 31 37 20 79 6f 75 72 63 6f 64 65 3a 20 79   2017 yourcode: y
+0030  7a 73 6b                                          zsk
+
+No.     Time           Source                Destination           Protocol Length Info
+      9 0.600859       wsn.ecs.soton.ac.uk   10.9.168.179          TCP      54     rfe(5002) → 30418 [FIN, ACK] Seq=52 Ack=7 Win=29312 Len=0
+
+Frame 9: 54 bytes on wire (432 bits), 54 bytes captured (432 bits) on interface 0
+Ethernet II, Src: Cisco_04:03:42 (d8:67:d9:04:03:42), Dst: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f)
+Internet Protocol Version 4, Src: wsn.ecs.soton.ac.uk (152.78.64.186), Dst: 10.9.168.179 (10.9.168.179)
+Transmission Control Protocol, Src Port: rfe (5002), Dst Port: 30418 (30418), Seq: 52, Ack: 7, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     10 0.600997       10.9.168.179          wsn.ecs.soton.ac.uk   TCP      54     30418 → rfe(5002) [ACK] Seq=7 Ack=53 Win=65536 Len=0
+
+Frame 10: 54 bytes on wire (432 bits), 54 bytes captured (432 bits) on interface 0
+Ethernet II, Src: LiteonTe_30:c5:6f (74:df:bf:30:c5:6f), Dst: Cisco_9f:f5:1f (00:00:0c:9f:f5:1f)
+Internet Protocol Version 4, Src: 10.9.168.179 (10.9.168.179), Dst: wsn.ecs.soton.ac.uk (152.78.64.186)
+Transmission Control Protocol, Src Port: 30418 (30418), Dst Port: rfe (5002), Seq: 7, Ack: 53, Len: 0

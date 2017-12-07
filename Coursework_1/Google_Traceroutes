@@ -1,0 +1,14 @@
+Tracing route to google.com [216.58.212.110]
+over a maximum of 30 hops:
+
+  1     1 ms     4 ms     3 ms  192.168.0.1
+  2     *        *        *     Request timed out.
+  3    19 ms    19 ms    16 ms  sotn-core-2b-xe-813-0.network.virginmedia.net [62.255.45.93]
+  4     *        *        *     Request timed out.
+  5    17 ms    20 ms    17 ms  tele-ic-7-ae2-0.network.virginmedia.net [62.253.175.34]
+  6    22 ms    28 ms   149 ms  74.125.48.190
+  7    24 ms    30 ms    38 ms  108.170.246.225
+  8    13 ms    19 ms    19 ms  108.170.238.149
+  9    23 ms    20 ms    15 ms  lhr35s06-in-f110.1e100.net [216.58.212.110]
+
+Trace complete.

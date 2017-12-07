@@ -1,0 +1,9 @@
+RESTART: C:\Users\Elliot\Google Drive\Uni\Coursework\Distributed Systems and Networks\Python\TCP.py
+Starting up socket on port 5002.
+Response : Hello ep1e16, the date is 01/11/2017 yourcode: qnpn
+>>>
+
+
+RESTART: C:\Users\Elliot\Google Drive\Uni\Coursework\Distributed Systems and Networks\Python\UDP.py
+Starting up socket on port 5005.
+Server reply : Hello ep1e16, the date is 01/11/2017
