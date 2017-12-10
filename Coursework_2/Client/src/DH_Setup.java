@@ -13,7 +13,7 @@ public class DH_Setup {
         try {
             reg = LocateRegistry.getRegistry("127.0.0.1", 2020);
             System.out.println("Connection established.");
-            MessageObject stub = (MessageObject) reg.lookup("OpenConnection");
+            DH_MessageObject stub = (DH_MessageObject) reg.lookup("OpenConnection");
             stub.open_connection();
 
             Logger.Log("Connection established.");

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -34,17 +35,12 @@ public class Main {
 
         try {
             LocateRegistry.createRegistry(portnumber);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        try {
 
             Registry reg = LocateRegistry.getRegistry("127.0.0.1", portnumber);
 
             // Setup messageobject instance.
-            ConnectionInstance dh_connection = new ConnectionInstance();
-            MessageObject dh_request_stub = (MessageObject) UnicastRemoteObject.exportObject(dh_connection, portnumber);
+            DH_ConnectionInstance dh_connection = new DH_ConnectionInstance();
+            DH_MessageObject dh_request_stub = (DH_MessageObject) UnicastRemoteObject.exportObject(dh_connection, portnumber);
             reg.rebind("OpenConnection", dh_request_stub);
             Logger.Log("Server running!");
         } catch (RemoteException e) {

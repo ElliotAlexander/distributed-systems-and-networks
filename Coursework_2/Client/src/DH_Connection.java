@@ -19,10 +19,10 @@ public class DH_Connection {
     private Key shortened_secret_key;
     private final BigInteger p,g;
     private Long b;
-    private final MessageObject stub;
+    private final DH_MessageObject stub;
     private Cipher c;
 
-    public DH_Connection(BigInteger p, BigInteger g, MessageObject stub){
+    public DH_Connection(BigInteger p, BigInteger g, DH_MessageObject stub){
         this.stub = stub;
         this.p = p;
         this.g = g;

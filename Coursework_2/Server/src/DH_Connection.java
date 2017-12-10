@@ -22,7 +22,6 @@ public class DH_Connection {
         BigInteger B = ga.mod(p);
         Logger.Log("Generated key : " + B);
         public_key = B;
-
     }
 
     public BigInteger getPublicKey(){return public_key;}
