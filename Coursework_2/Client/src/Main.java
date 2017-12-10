@@ -18,7 +18,8 @@ public class Main {
                 System.setSecurityManager(new SecurityManager());
             }
 
-            DH_Setup setup = new DH_Setup();
-
+            DH_Setup setup = new DH_Setup("127.0.0.1", 2020);
+            DH_Connection c = setup.getConnection();
+            c.send_message("What a cunt");
     }
 }

@@ -1,8 +1,9 @@
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
+import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
@@ -19,8 +20,8 @@ public class ConnectionInstance implements MessageObject {
 
     @Override
     public BigInteger[] suggest() {
-        BigInteger p = BigInteger.probablePrime(512, new Random());
-        BigInteger g = BigInteger.probablePrime(50, new Random());
+        BigInteger p = BigInteger.probablePrime(256, new Random());
+        BigInteger g = BigInteger.probablePrime(128, new Random());
 
         Logger.Log("Suggesting keypairs P = " + p + " and g = " + g);
         current_connection = new DH_Connection(p,g);
@@ -39,13 +40,36 @@ public class ConnectionInstance implements MessageObject {
     }
 
     @Override
-    public void send_message(String s) {
+    public byte[] send_message(byte[] s) {
+
+        byte[] secret_key_long = current_connection.getSecret_key().toByteArray();
+
+        // The JDK has a default 128 bit key length restriction (16 bytes).
+        // The key generated is upto 32 bytes, so we could use that
+        // depends on whether its enabled on both machined iirc
+
+        byte[] key = new byte[16];
+        for(int i = 0; i < 16; i++){
+            key[i] = secret_key_long[i];
+        }
+        Key newkey = new SecretKeySpec(key, "AES");
         try {
-            Cipher c = Cipher.getInstance("AES/ECB/PCS5Padding");
+            Cipher c = Cipher.getInstance("AES");
+            c.init(Cipher.DECRYPT_MODE, newkey);
+            String decrypted = new String(c.doFinal(s));
+            Logger.Log(Logger.Level.MESSAGE, decrypted);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
         }
+
+        return "HelloWorld".getBytes();
     }
 }

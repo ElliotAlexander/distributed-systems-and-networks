@@ -10,4 +10,5 @@ public interface MessageObject extends Remote {
 
     public BigInteger swap_public(BigInteger public_key) throws RemoteException;
 
+    public byte[] send_message(byte[] text) throws RemoteException;
 }
