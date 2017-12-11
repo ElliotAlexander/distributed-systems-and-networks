@@ -1,5 +1,4 @@
 import java.math.BigInteger;
-import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -7,7 +6,7 @@ import java.rmi.registry.Registry;
 
 public class DH_Setup {
 
-    private DH_Connection_128bit connection;
+    private DH_Connection_Client connection;
 
     // This method initiates DH key exchange. Once complete, a secure channel will have been setup.
     public DH_Setup(String hostname, int port){
@@ -27,7 +26,7 @@ public class DH_Setup {
 
             // Receive the primes, and open a new connection with them.
             Logger.Log("Receiving suggested pairs: p = " + pairs[0] + ", g = " + pairs[1]);
-            DH_Connection_128bit connection = new DH_Connection_128bit(pairs[0], pairs[1], stub);
+            DH_Connection_Client connection = new DH_Connection_Client(pairs[0], pairs[1], stub);
 
             // Once we've generated our public key, swap it with the servers.
             // Receive the servers public key (referred to as foreign key for simplicity).
@@ -53,7 +52,7 @@ public class DH_Setup {
     }
 
 
-    public DH_Connection_128bit getConnection(){
+    public DH_Connection_Client getConnection(){
         return connection;
     }
 }
