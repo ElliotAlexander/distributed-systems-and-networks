@@ -10,7 +10,7 @@ public class MyClient {
             String hostname, username;
 
             if(args.length < 2){
-                Logger.Log(Logger.Level.ERROR, "Couldn't parse arguments!");
+                ClientLogger.Log(ClientLogger.Level.ERROR, "Couldn't parse arguments!");
                 return;
             } else {
                 hostname = args[0];
@@ -25,7 +25,7 @@ public class MyClient {
 
             DH_Setup setup = new DH_Setup(hostname, 2020);
             DH_Connection_Client c = setup.getConnection();
-            c.send_message("Requesting ciphertext");
+            c.send_message(username);
 
     }
 }

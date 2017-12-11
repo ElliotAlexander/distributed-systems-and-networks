@@ -18,31 +18,31 @@ public class DH_Setup {
             reg = LocateRegistry.getRegistry(hostname, port);
             DH_MessageObject stub = (DH_MessageObject) reg.lookup("OpenConnection");
             stub.open_connection();
-            Logger.Log("Connection established.");
+            ClientLogger.Log("Connection established.");
 
 
             // Ask the server to suggest a pair of primes for DH key exchange.
             BigInteger[] pairs = stub.suggest();
 
             // Receive the primes, and open a new connection with them.
-            Logger.Log("Receiving suggested pairs: p = " + pairs[0] + ", g = " + pairs[1]);
+            ClientLogger.Log("Receiving suggested pairs: p = " + pairs[0] + ", g = " + pairs[1]);
             DH_Connection_Client connection = new DH_Connection_Client(pairs[0], pairs[1], stub);
 
             // Once we've generated our public key, swap it with the servers.
             // Receive the servers public key (referred to as foreign key for simplicity).
             BigInteger foreign_key = stub.swap_public(connection.getPublicKey());
-            Logger.Log("Sending public key " + connection.getPublicKey() + " to server.");
-            Logger.Log("Receiving foreign key " + foreign_key + " back from client.");
+            ClientLogger.Log("Sending public key " + connection.getPublicKey() + " to server.");
+            ClientLogger.Log("Receiving foreign key " + foreign_key + " back from client.");
             connection.setForeign_key(foreign_key);
 
 
             // once we've received the servers public key, we can build the secret key.
             // A secure channel has then been established.
             connection.compute_secret_key();
-            Logger.Log("Computing secret key...");
-            Logger.Log("Secret key : " + connection.getSecret_key());
+            ClientLogger.Log("Computing secret key...");
+            ClientLogger.Log("Secret key : " + connection.getSecret_key());
             this.connection = connection;
-            Logger.Log("Secure connection established.");
+            ClientLogger.Log("Secure connection established.");
 
         } catch (RemoteException e) {
             e.printStackTrace();

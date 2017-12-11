@@ -19,7 +19,7 @@ public class DH_ConnectionInstance implements DH_MessageObject {
     @Override
     public void open_connection() {
         lock.lock();
-        if(current_connection != null) { Logger.Log("Clearing previous connection attempts."); current_connection = null; }
+        if(current_connection != null) { ServerLogger.Log("Clearing previous connection attempts."); current_connection = null; }
     }
 
     @Override
@@ -27,7 +27,7 @@ public class DH_ConnectionInstance implements DH_MessageObject {
         BigInteger p = BigInteger.probablePrime(256, new Random());
         BigInteger g = BigInteger.probablePrime(128, new Random());
 
-        Logger.Log("Suggesting keypairs P = " + p + " and g = " + g);
+        ServerLogger.Log("Suggesting keypairs P = " + p + " and g = " + g);
         synchronized (lock){
             current_connection = new DH_Connection_Server(p,g);
         }
@@ -36,13 +36,13 @@ public class DH_ConnectionInstance implements DH_MessageObject {
 
     @Override
     public BigInteger swap_public(BigInteger foreign_key) throws RemoteException {
-        Logger.Log("Receiving foreign key " + foreign_key + " from client.");
+        ServerLogger.Log("Receiving foreign key " + foreign_key + " from client.");
         synchronized (lock){
             current_connection.setForeign_key(foreign_key);
-            Logger.Log("Sending public key " + current_connection.getPublicKey() + " back to client.");
-            Logger.Log("Computing secret key...");
+            ServerLogger.Log("Sending public key " + current_connection.getPublicKey() + " back to client.");
+            ServerLogger.Log("Computing secret key...");
             current_connection.compute_secret_key();
-            Logger.Log("Secret key : " + current_connection.getSecret_key());
+            ServerLogger.Log("Secret key : " + current_connection.getSecret_key());
             return current_connection.getPublicKey();
         }
     }
@@ -57,6 +57,8 @@ public class DH_ConnectionInstance implements DH_MessageObject {
             // The key generated is upto 32 bytes, so we could use that
             // depends on whether its enabled on both machined iirc
 
+            // The client will now pass us a username, which will be used to access the ecs server.
+
             byte[] key = new byte[16];
             for (int i = 0; i < 16; i++) {
                 key[i] = secret_key_long[i];
@@ -65,11 +67,11 @@ public class DH_ConnectionInstance implements DH_MessageObject {
             try {
                 Cipher c = Cipher.getInstance("AES");
                 c.init(Cipher.DECRYPT_MODE, newkey);
-                String decrypted = new String(c.doFinal(s));
-                Logger.Log(Logger.Level.MESSAGE, decrypted);
+                String username = new String(c.doFinal(s));
+                ServerLogger.Log(ServerLogger.Level.MESSAGE, "Username : " + username);
 
                 // Now we've decrypted the text from the client, we can return the cipher text.
-                String return_text = current_connection.getCipherText();
+                String return_text = current_connection.getCipherText(username);
                 // We need to re-encrypt the ciphertext though :)
                 c.init(Cipher.ENCRYPT_MODE, newkey);
                 byte[] encrypted = c.doFinal(return_text.getBytes());

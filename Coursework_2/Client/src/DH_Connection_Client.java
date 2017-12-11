@@ -41,12 +41,13 @@ public class DH_Connection_Client {
         this.g = g;
 
         this.b = Long.valueOf((new Random()).nextInt(100000));
-        Logger.Log("Using b-value of " + b);
+        ClientLogger.Log("Using b-value of " + b);
         BigInteger value = new BigInteger(String.valueOf(g));
         BigInteger gb = value.pow(b.intValue());
-        Logger.Log("Generated g^a value of " + gb);
+        // this is really massive.
+        //ClientLogger.Log("Generated g^a value of " + gb);
         BigInteger B = gb.mod(p);
-        Logger.Log("Generated key : " + B);
+        ClientLogger.Log("Generated key : " + B);
         public_key = B;
 
     }
@@ -62,7 +63,7 @@ public class DH_Connection_Client {
     public void compute_secret_key() {
 
         if(foreign_key == null){
-            Logger.Log(Logger.Level.ERROR, "Compute secret key called before foreign key received! Exiting...");
+            ClientLogger.Log(ClientLogger.Level.ERROR, "Compute secret key called before foreign key received! Exiting...");
             return;
         }
 

@@ -7,13 +7,14 @@ public class Ciphertext_client {
 
         // Take the FIRST TWO bytes of the full 128bit secret key. This is used as a key for ECS.
         int secret_short = ((secret_full.toByteArray()[0] & 0xff) << 8) | (secret_full.toByteArray()[1] & 0xff);
-        Logger.Log(Logger.Level.INFO, "Using secret key " + secret_short + " to decrypt ciphertext.");
+        ClientLogger.Log("Receiving ciphertext...");
+        ClientLogger.Log(ClientLogger.Level.INFO, "Using secret key " + secret_short + " to decrypt ciphertext.");
 
         // Calculate the subsitution and transpose shifts.
         int sub_shift = secret_short % 26;
         int transpose_shift = secret_short % 8;
-        Logger.Log("Substitution shift amount: " + sub_shift);
-        Logger.Log("Transpose shift amount: " + transpose_shift);
+        ClientLogger.Log("Substitution shift amount: " + sub_shift);
+        ClientLogger.Log("Transpose shift amount: " + transpose_shift);
 
         // To decode the process is -> sub -> sub -> transpose -> transpose = plaintext + padding.
         String sub1 = substitution(s, -sub_shift);
@@ -31,8 +32,8 @@ public class Ciphertext_client {
             }
         }
 
-        Logger.Log("Final ciphertext generated!");
-        Logger.Log(transpose2);
+        ClientLogger.Log("Final ciphertext generated!");
+        ClientLogger.Log(transpose2);
         return sub2;
     }
 

@@ -1,3 +1,5 @@
+import com.sun.security.ntlm.Server;
+
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -17,12 +19,13 @@ public class DH_Connection_Server {
         this.g = g;
 
         this.a = Long.valueOf((new Random()).nextInt(100000));
-        Logger.Log("Using a-value of " + a);
+        ServerLogger.Log("Using a-value of " + a);
         BigInteger value = new BigInteger(String.valueOf(g));
         BigInteger ga = value.pow(a.intValue());
-        Logger.Log("Generated g^a value of " + ga);
+        // This is really massive
+        //Logger.Log("Generated g^a value of " + ga);
         BigInteger B = ga.mod(p);
-        Logger.Log("Generated key : " + B);
+        ServerLogger.Log("Generated key : " + B);
         public_key = B;
 
     }
@@ -41,12 +44,12 @@ public class DH_Connection_Server {
         return secret_key;
     }
 
-    public String getCipherText(){
+    public String getCipherText(String username){
         int private_key_int = ((secret_key.toByteArray()[0] & 0xff) << 8) | (secret_key.toByteArray()[1] & 0xff);
-        Logger.Log("Using ECS-Server-side private key " + private_key_int);
+        ServerLogger.Log("Using ECS-Server-side private key " + private_key_int);
         Ciphertext_server ci = new Ciphertext_server();
-        Logger.Log("Returning Ciphertext_server to client.");
-        return ci.GetCiphertext(private_key_int);
+        ServerLogger.Log("Returning Ciphertext_server to client.");
+        return ci.GetCiphertext(private_key_int, username);
     }
 
 }

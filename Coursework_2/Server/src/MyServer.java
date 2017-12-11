@@ -9,7 +9,6 @@ public class MyServer {
         new MyServer(args);
     }
 
-
     public MyServer(String[] args){
 
 
@@ -33,9 +32,9 @@ public class MyServer {
             DH_ConnectionInstance dh_connection = new DH_ConnectionInstance();
             DH_MessageObject dh_request_stub = (DH_MessageObject) UnicastRemoteObject.exportObject(dh_connection, portnumber);
             reg.rebind("OpenConnection", dh_request_stub);
-            Logger.Log("Server running!");
+            ServerLogger.Log("Server running!");
         } catch (RemoteException e) {
-            Logger.Log(Logger.Level.ERROR, "Failed to register! Is the port open / registry running?");
+            ServerLogger.Log(ServerLogger.Level.ERROR, "Failed to register! Is the port open / registry running?");
             e.printStackTrace();
         }
     }
