@@ -5,5 +5,4 @@ public interface CiphertextInterface extends Remote {
 
     public String get (String uid, int key) throws RemoteException;
 
-
 }

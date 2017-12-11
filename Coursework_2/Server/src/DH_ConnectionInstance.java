@@ -58,6 +58,13 @@ public class DH_ConnectionInstance implements DH_MessageObject {
             c.init(Cipher.DECRYPT_MODE, newkey);
             String decrypted = new String(c.doFinal(s));
             Logger.Log(Logger.Level.MESSAGE, decrypted);
+
+            // Now we've decrypted the text from the client, we can return the cipher text.
+            String return_text = current_connection.getCipherText();
+            // We need to re-encrypt the ciphertext though :)
+            c.init(Cipher.ENCRYPT_MODE, newkey);
+            byte[] encrypted = c.doFinal(return_text.getBytes());
+            return encrypted;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
@@ -69,7 +76,6 @@ public class DH_ConnectionInstance implements DH_MessageObject {
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         }
-
-        return "HelloWorld".getBytes();
+        return null;
     }
 }

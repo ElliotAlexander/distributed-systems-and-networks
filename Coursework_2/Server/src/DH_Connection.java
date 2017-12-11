@@ -22,6 +22,7 @@ public class DH_Connection {
         BigInteger B = ga.mod(p);
         Logger.Log("Generated key : " + B);
         public_key = B;
+
     }
 
     public BigInteger getPublicKey(){return public_key;}
@@ -36,6 +37,14 @@ public class DH_Connection {
 
     public BigInteger getSecret_key(){
         return secret_key;
+    }
+
+    public String getCipherText(){
+        int private_key_int = ((secret_key.toByteArray()[0] & 0xff) << 8) | (secret_key.toByteArray()[1] & 0xff);
+        Logger.Log("Using ECS-Server-side private key " + private_key_int);
+        Ciphertext ci = new Ciphertext();
+        Logger.Log("Returning Ciphertext to client.");
+        return ci.GetCiphertext(private_key_int);
     }
 
 }

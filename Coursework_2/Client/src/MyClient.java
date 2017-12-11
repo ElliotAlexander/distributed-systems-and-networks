@@ -24,7 +24,7 @@ public class MyClient {
             }
 
             DH_Setup setup = new DH_Setup(hostname, 2020);
-            DH_Connection c = setup.getConnection();
+            DH_Connection_128bit c = setup.getConnection();
             c.send_message("Requesting ciphertext");
 
     }

@@ -14,25 +14,18 @@ public class Main {
 
     public Main(String[] args){
 
-        int portnumber = 2020;
-
-        if(args.length == 0){
-            Logger.Log(Logger.Level.WARNING, "No port number entered! Defaulting to 7000");
-        } else {
-            try {
-                Integer i = Integer.parseInt(args[0]);
-                Logger.Log("Using port number " + i);
-                portnumber = i;
-            } catch (NumberFormatException e){
-                Logger.Log(Logger.Level.WARNING, "Error parsing port number from [" + args[0] + "]. Defaulting to 7000.");
-            }
-        }
 
         System.setProperty( "java.security.policy", "mypolicy" );
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
 
+        DH_ServerStart(2020);
+
+    }
+
+
+    private void DH_ServerStart(int portnumber){
         try {
             LocateRegistry.createRegistry(portnumber);
 
@@ -45,8 +38,6 @@ public class Main {
             Logger.Log("Server running!");
         } catch (RemoteException e) {
             Logger.Log(Logger.Level.ERROR, "Failed to register! Is the port open / registry running?");
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }
