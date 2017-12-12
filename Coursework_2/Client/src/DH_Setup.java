@@ -19,6 +19,7 @@ public class DH_Setup {
             reg = LocateRegistry.getRegistry(hostname, port);
             DH_MessageObject stub = (DH_MessageObject) reg.lookup("OpenConnection");
             uuid = stub.open_connection();
+            ClientLogger.set_uuid(uuid);
             ClientLogger.Log("Connection established.");
 
 
