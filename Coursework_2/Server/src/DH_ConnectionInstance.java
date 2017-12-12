@@ -1,3 +1,5 @@
+import com.sun.corba.se.spi.activation.LocatorPackage.ServerLocationPerORB;
+
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
@@ -5,52 +7,50 @@ import java.rmi.RemoteException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Logger;
 
 public class DH_ConnectionInstance implements DH_MessageObject {
 
-
-    private DH_Connection_Server current_connection;
-    private Lock lock = new ReentrantLock();
-
+    private HashMap<Integer, DH_Connection_Server> connections = new HashMap<>();
+    private int next_uuid = 0;
 
     @Override
-    public void open_connection() {
-        lock.lock();
-        if(current_connection != null) { ServerLogger.Log("Clearing previous connection attempts."); current_connection = null; }
+    public Integer open_connection() {
+        ServerLogger.Log("Using UUID : " + (next_uuid +1));
+        next_uuid = next_uuid + 1;
+        return next_uuid;
     }
 
     @Override
-    public BigInteger[] suggest() {
+    public BigInteger[] suggest(Integer uuid) {
         BigInteger p = BigInteger.probablePrime(256, new Random());
         BigInteger g = BigInteger.probablePrime(128, new Random());
 
         ServerLogger.Log("Suggesting keypairs P = " + p + " and g = " + g);
-        synchronized (lock){
-            current_connection = new DH_Connection_Server(p,g);
-        }
+        DH_Connection_Server current_connection = new DH_Connection_Server(p,g);
+        connections.put(uuid, current_connection);
         return new BigInteger[]{p, g};
-    }
+}
 
     @Override
-    public BigInteger swap_public(BigInteger foreign_key) throws RemoteException {
+    public BigInteger swap_public(BigInteger foreign_key, Integer uuid) throws RemoteException {
+        DH_Connection_Server current_connection = connections.get(uuid);
         ServerLogger.Log("Receiving foreign key " + foreign_key + " from client.");
-        synchronized (lock){
-            current_connection.setForeign_key(foreign_key);
-            ServerLogger.Log("Sending public key " + current_connection.getPublicKey() + " back to client.");
-            ServerLogger.Log("Computing secret key...");
-            current_connection.compute_secret_key();
-            ServerLogger.Log("Secret key : " + current_connection.getSecret_key());
-            return current_connection.getPublicKey();
-        }
+        current_connection.setForeign_key(foreign_key);
+        ServerLogger.Log("Sending public key " + current_connection.getPublicKey() + " back to client.");
+        ServerLogger.Log("Computing secret key...");
+        current_connection.compute_secret_key();
+        ServerLogger.Log("Secret key : " + current_connection.getSecret_key());
+        return current_connection.getPublicKey();
     }
 
     @Override
-    public byte[] send_message(byte[] s) {
-
-        synchronized (lock) {
+    public byte[] send_message(byte[] s, Integer uuid) {
+            DH_Connection_Server current_connection = connections.get(uuid);
             byte[] secret_key_long = current_connection.getSecret_key().toByteArray();
 
             // The JDK has a default 128 bit key length restriction (16 bytes).
@@ -87,10 +87,8 @@ public class DH_ConnectionInstance implements DH_MessageObject {
                 e.printStackTrace();
             } catch (IllegalBlockSizeException e) {
                 e.printStackTrace();
-            } finally {
-                lock.unlock();
             }
-        }
+
         return null;
     }
 }

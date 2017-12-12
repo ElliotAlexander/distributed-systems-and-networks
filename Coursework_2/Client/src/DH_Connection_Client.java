@@ -32,13 +32,14 @@ public class DH_Connection_Client {
     private Long b;
     private final DH_MessageObject stub;
     private Cipher c;
-
+    private Integer uuid;
 
     // This method generates the public key.
-    public DH_Connection_Client(BigInteger p, BigInteger g, DH_MessageObject stub){
+    public DH_Connection_Client(BigInteger p, BigInteger g, DH_MessageObject stub, Integer uuid){
         this.stub = stub;
         this.p = p;
         this.g = g;
+        this.uuid = uuid;
 
         this.b = Long.valueOf((new Random()).nextInt(100000));
         ClientLogger.Log("Using b-value of " + b);
@@ -110,7 +111,7 @@ public class DH_Connection_Client {
             byte[] encrypted = c.doFinal(outgoing);
 
             // Save the return value from the server.
-            byte[] returnval = stub.send_message(encrypted);
+            byte[] returnval = stub.send_message(encrypted, uuid);
 
             // decrypt the return value with the secret key.
             c.init(Cipher.DECRYPT_MODE, shortened_secret_key);

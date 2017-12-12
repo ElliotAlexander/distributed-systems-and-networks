@@ -4,11 +4,11 @@ import java.rmi.RemoteException;
 
 public interface DH_MessageObject extends Remote {
 
-    public void open_connection() throws RemoteException;
+    public Integer open_connection() throws RemoteException;
 
-    public BigInteger[] suggest() throws RemoteException;
+    public BigInteger[] suggest(Integer uuid) throws RemoteException;
 
-    public BigInteger swap_public(BigInteger public_key) throws RemoteException;
+    public BigInteger swap_public(BigInteger public_key, Integer uuid) throws RemoteException;
 
-    public byte[] send_message(byte[] text) throws RemoteException;
+    public byte[] send_message(byte[] text, Integer uuid) throws RemoteException;
 }
