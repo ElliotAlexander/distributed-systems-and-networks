@@ -13,6 +13,7 @@ public class DH_Connection_Server {
     private final BigInteger p,g;
     private Long a;
 
+
     public DH_Connection_Server(BigInteger p, BigInteger g){
 
         this.p = p;
