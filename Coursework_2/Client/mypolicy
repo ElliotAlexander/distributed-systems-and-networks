@@ -1,6 +1,6 @@
 grant {
       permission java.net.SocketPermission
-      		       "*:1024-65535",
+      		       "*:2020,",
 		       "connect ,accept, listen, resolve";
       permission java.net.SocketPermission
 		       "*:80", "connect";
